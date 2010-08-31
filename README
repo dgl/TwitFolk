@@ -46,7 +46,7 @@ Pre-requisites
 
         Then run with:
 
-        PERL5LIB=./twitfolk-libs ./twitfolk.pl
+        PERL5LIB=./twitfolk-libs/lib/perl5 ./twitfolk.pl
 
 - A twitter.com or identi.ca account
 
