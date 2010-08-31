@@ -25,6 +25,9 @@ pidfile = twitfolk.pid
 # Away message to immediately set.
 away = If you have a Twitter or Identi.ca account, ask grifferz to add you to me!
 
+# Nickname of owner (the bot might message you to ask you to authorize it, so you should set this)
+owner = dg
+
 # Channel, without leading #
 channel = bitfolk
 
