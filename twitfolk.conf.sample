@@ -1,0 +1,58 @@
+# Example config file for twitfolk.pl
+# $Id: twitfolk.conf.sample 1510 2010-05-19 09:08:45Z andy $
+
+# Server hostname or IP.
+target_server = uk.blitzed.org
+
+# Port to connect to.
+target_port = 6667
+
+# password to use to connect to server (comment out to use no password)
+target_pass = yournickpass
+
+# IRC nick to use.
+nick = Twitfolk
+
+# If the nick is registered, identify to NickServ with this password.
+nick_pass = yournickpass
+
+# If there is no identd installed then use this ident.
+username = twitfolk
+
+# File to write PID to whilst running.
+pidfile = twitfolk.pid
+
+# Away message to immediately set.
+away = If you have a Twitter or Identi.ca account, ask grifferz to add you to me!
+
+# Channel, without leading #
+channel = bitfolk
+
+# Use twitter.com, defaults to 1.
+use_twitter = 1
+
+# Register your "app" at: http://dev.twitter.com/apps
+
+# Consumer key
+twitter_consumer_key = noejmNfxtxZEaATRc1nJoA
+
+# Consumer secret
+twitter_consumer_secret = N05k9nZ3yxP9ywgkOy2XHsUTJIBuosrgVGa6DNimII
+
+# Use identi.ca (instead or as well as twitter.com).  Requires Net::Twitter version >= 2.0.
+use_identica = 0
+
+# Your screen name on identi.ca
+identica_user = identiuser
+
+# Your password on identi.ca
+identica_pass = identipass
+
+# File containing list of people to follow and their IRC nicknames
+friends_file = twitfolk.friends
+
+# Where to store the most recent tweet id
+tweet_id_file = last_tweet
+
+# How many tweets to relay at a time
+max_tweets = 4

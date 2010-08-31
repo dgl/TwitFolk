@@ -1,0 +1,80 @@
+TwitFolk - an IRC/Twitter gateway bot
+=====================================
+
+Overview
+--------
+
+Gate the tweets/dents from a Twitter or Identi.ca account's list of friends
+into an IRC channel.
+
+History
+-------
+
+Some people in an IRC channel started noticing that conversations kept crossing
+over between IRC and Twitter, so they talked about gating each other's tweets
+into the channel:
+
+	http://wiki.blitzed.org/Channel:bitfolk/Twitter_Bot
+
+Eventually someone quickly knocked a bot together:
+
+	http://wiki.blitzed.org/Channel:bitfolk/Twitfolk
+
+Then a couple of other channels started using it.
+
+Pre-requisites
+--------------
+
+- Perl (>=5.10)
+
+- Some Perl modules:
+	- Net::Twitter
+        - EV
+        - AnyEvent::Twitter::Stream
+        - AnyEvent::IRC
+        - MooseX::Daemonize
+        - Config::Tiny
+        - Try::Tiny
+	- HTML::Entities
+
+    It might be easiest to use cpanm with a local::lib to use these modules:
+
+        wget -qO ~/bin/cpanm cpanmin.us 
+        chmod 755 ~/bin/cpanm
+        cpanm --local-lib=./twitfolk-libs Net::Twitter AnyEvent::Twitter::Stream AnyEvent::IRC MooseX::Daemonize Config::Tiny Try::Tiny
+        [wait a rather long time]
+
+        Then run with:
+
+        PERL5LIB=./twitfolk-libs ./twitfolk.pl
+
+- A twitter.com or identi.ca account
+
+Source
+------
+
+You can get it from our Subversion repository:
+
+	https://svn.bitfolk.com/repos/twitfolk/
+
+Support
+-------
+
+Limited community support is available from the TwitFolk users mailing list:
+
+	https://lists.bitfolk.com/mailman/listinfo/twitfolk
+
+Feature suggestions would be great, too.
+
+You can follow TwitFolk development on Identi.ca:
+
+	http://identi.ca/twitfolk
+
+which is also gated to Twitter:
+
+	http://twitter.com/therealtwitfolk
+
+(The "twitfolk" username was already taken on Twitter; if you own it and want
+to give it up, please let us know!)
+
+$Id:README 977 2009-07-26 02:50:08Z andy $
