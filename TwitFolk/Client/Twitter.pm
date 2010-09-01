@@ -60,6 +60,8 @@ sub on_privmsg {
 sub reconnect {
   my($self) = @_;
 
+  $self->listener(undef);
+
   AE::timer 10, 0, sub {
     debug "Reconnecting to twitter...";
     $self->sync;
@@ -68,6 +70,7 @@ sub reconnect {
 
 sub start_stream {
   my($self) = @_;
+  return if $self->listener;
 
   debug "Starting stream";
 
@@ -78,6 +81,7 @@ sub start_stream {
       token           => $self->access_token,
       token_secret    => $self->access_token_secret,
       method          => "userstream",
+      timeout         => 180,
       on_tweet        => sub {
         my($tweet) = @_;
         debug "on_tweet: " . JSON::to_json($tweet);
