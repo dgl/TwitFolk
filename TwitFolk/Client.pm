@@ -2,6 +2,8 @@
 package TwitFolk::Client;
 use Moose;
 use TwitFolk::Log;
+use HTML::Entities;
+use Encode qw(encode_utf8);
 
 has irc         => (isa => "TwitFolk::IRC", is => "ro");
 has target      => (isa => "Str", is => "ro");
@@ -13,7 +15,7 @@ sub on_update {
 
   my $screen_name = $update->{user}->{screen_name};
   my $nick = $self->friends->lookup_nick($screen_name);
-  my $text = $update->{text};
+  my $text = decode_entities $update->{text};
 
   # Skip tweets directed at others who aren't friends
   if ($text =~ /^@([[:alnum:]_]+)/) {
@@ -33,7 +35,7 @@ sub on_update {
     $text =~ s/[\n\r]/ /g;
   }
 
-  $self->irc->notice($self->target, sprintf("[%s/\@%s] %s",
+  $self->irc->notice($self->target, encode_utf8 sprintf("[%s/\@%s] %s",
       $nick, $screen_name, $text));
 }
 
