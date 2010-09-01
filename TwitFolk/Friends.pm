@@ -62,19 +62,11 @@ sub update
         # Friend may be on identi.ca OR twitter
         $svc = ($svcname =~ /dent/i) ? $self->identica->api : $self->twitter->api;
 
-        # Net::Twitter sometimes dies inside JSON::Any :(
         try {
           $u = $svc->show_user($f);
         } catch {
           debug("%s->show_user(%s) error: %s", $svcname, $f, $_);
-          next;
         };
-
-        if ($svc->http_code != 200) {
-          debug("%s->show_user(%s) failed: %s", $svcname, $f,
-            $svc->http_message);
-          next;
-        }
 
         my $id = $u->{id};
         $self->friends->{$f}->{id} = $id;
@@ -82,25 +74,17 @@ sub update
         debug("%s: Adding new friend '%s' (%lu)", $svcname,
           $f, $id);
 
-        # Net::Twitter sometimes dies inside JSON::Any :(
         try {
           $svc->create_friend($id); 
         } catch {
           debug("%s->create_friend(%lu) error: %s",
             $svcname, $id, $_);
-          next;
         };
 
-        if ($svc->http_code != 200) {
-          debug("%s->create_friend($id) failed: %s",
-            $svcname, $svc->http_message);
-        }
+        $self->friends->{$f}->{nick} = $nick;
       }
-
-      $self->friends->{$f}->{nick} = $nick;
     }
   }
-
   close $ff or warn "Something weird when closing friends_file: $!";
 }
 
@@ -119,18 +103,12 @@ sub sync
 
   my $twitter_friends;
 
-  # Net::Twitter sometimes dies inside JSON::Any :(
   try {
     $twitter_friends = $svc->friends;
   } catch {
     debug("%s->friends() error: %s", $svcname, $_);
   };
   return unless $twitter_friends;
-
-  if ($svc->http_code != 200) {
-    debug("%s->friends() failed: %s", $svcname, $svc->http_message);
-    return;
-  }
 
   if (ref($twitter_friends) ne "ARRAY") {
     debug("%s->friends() didn't return an arrayref!", $svcname);

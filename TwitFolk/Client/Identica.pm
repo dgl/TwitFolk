@@ -8,14 +8,20 @@ extends "TwitFolk::Client";
 
 with qw(TwitFolk::Client::Basic);
 
-has max_tweets  => (isa => "Int", is => "ro");
+has max_tweets => (isa => "Int", is => "ro");
+has sync_timer => (isa => "AnyEvent::Timer", is => "rw");
 
 sub BUILD {
   my($self) = @_;
 
   $self->api_args->{identica} = 1;
 
-  AE::timer 300, 300, sub { $self->sync };
+  $self->sync_timer(
+    # Every 300 seconds
+    AE::timer 300, 300, sub {
+      $self->sync;
+    }
+  );
 }
 
 sub sync {

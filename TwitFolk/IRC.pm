@@ -57,7 +57,11 @@ sub on_registered {
 
 sub on_disconnect {
   my($self) = @_;
-  AE::timer 10, 0, sub { $self->{twitfolk_connect_cb}->() };
+
+  $self->{reconnect_timer} = AE::timer 10, 0, sub {
+    undef $self->{reconnect_timer};
+    $self->{twitfolk_connect_cb}->();
+  };
 }
 
 sub on_join {

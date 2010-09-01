@@ -30,7 +30,7 @@ sub on_update {
   debug("%s/%s: [%s/\@%s] %s", ref $self, $update->{id}, $nick, $screen_name, $text);
 
   if ($text =~ /[\n\r]/) {
-    irc_debug("%s/%s contains dangerous characters; removing!",
+    debug("%s/%s contains dangerous characters; removing!",
       ref $self, $update->{id});
     $text =~ s/[\n\r]/ /g;
   }

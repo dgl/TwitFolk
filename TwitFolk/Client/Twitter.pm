@@ -16,6 +16,9 @@ has owner => (isa => "Str", is => "rw");
 # Our listener for tweets
 has listener => (isa => "Maybe[AnyEvent::Twitter::Stream]", is => "rw");
 
+# Timer for reconnections
+has reconnect_timer => (isa => "Maybe[AnyEvent::Timer]", is => "rw");
+
 sub BUILD {
   my($self) = @_;
 
@@ -62,10 +65,13 @@ sub reconnect {
 
   $self->listener(undef);
 
-  AE::timer 10, 0, sub {
-    debug "Reconnecting to twitter...";
-    $self->sync;
-  }
+  $self->reconnect_timer(
+    AE::timer 10, 0, sub {
+      $self->reconnect_timer(undef);
+      debug "Reconnecting to twitter...";
+      $self->sync;
+    }
+  );
 }
 
 sub start_stream {

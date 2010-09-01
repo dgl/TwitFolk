@@ -170,6 +170,8 @@ sub on_join {
     $self->_friends->identica($self->_identica);
     $self->_identica->sync;
   }
+
+  $self->_friends->update;
 }
 
 1;
