@@ -28,20 +28,21 @@ Pre-requisites
 - Perl (>=5.10)
 
 - Some Perl modules:
-	- Net::Twitter
-        - EV
         - AnyEvent::Twitter::Stream
         - AnyEvent::IRC
-        - MooseX::Daemonize
         - Config::Tiny
-        - Try::Tiny
+        - Crpyt::SSLeay
+        - EV
 	- HTML::Entities
+        - MooseX::Daemonize
+	- Net::Twitter
+        - Try::Tiny
 
     It might be easiest to use cpanm with a local::lib to use these modules:
 
         wget -qO ~/bin/cpanm cpanmin.us 
         chmod 755 ~/bin/cpanm
-        cpanm --local-lib=./twitfolk-libs Net::Twitter AnyEvent::Twitter::Stream AnyEvent::IRC MooseX::Daemonize Config::Tiny Try::Tiny
+        cpanm --local-lib=./twitfolk-libs Net::Twitter AnyEvent::Twitter::Stream AnyEvent::IRC MooseX::Daemonize Config::Tiny Try::Tiny EV Crypt::SSLeay
         [wait a rather long time]
 
         Then run with:
