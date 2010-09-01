@@ -13,7 +13,7 @@ has max_tweets  => (isa => "Int", is => "ro");
 sub BUILD {
   my($self) = @_;
 
-  $self->api_args({ identica => 1 });
+  $self->api_args->{identica} = 1;
 
   AE::timer 300, 300, sub { $self->sync };
 }
