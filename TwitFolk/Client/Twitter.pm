@@ -81,7 +81,6 @@ sub start_stream {
       token           => $self->access_token,
       token_secret    => $self->access_token_secret,
       method          => "userstream",
-      timeout         => 180,
       on_tweet        => sub {
         my($tweet) = @_;
         debug "on_tweet: " . JSON::to_json($tweet);
