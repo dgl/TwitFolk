@@ -117,12 +117,13 @@ sub connect {
   $self->_irc->connect($self,
     $c->{target_server}, $c->{target_port},
     {
-      nick     => $c->{nick},
-      user     => $c->{username},
-      real     => $self->ircname,
-      password => $self->{target_pass},
-      channel  => $c->{channel},
-      away     => $c->{away}
+      nick      => $c->{nick},
+      nick_pass => $c->{nick_pass},
+      user      => $c->{username},
+      real      => $self->ircname,
+      password  => $self->{target_pass},
+      channel   => $c->{channel},
+      away      => $c->{away}
     }
   );
 }
