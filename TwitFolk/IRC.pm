@@ -75,7 +75,7 @@ sub on_irc_433 {
 }
 
 sub on_irc_notice {
-  my($self, $msg) = @_;
+  my($self, $irc, $msg) = @_;
 
   if(lc prefix_nick($msg) eq 'nickserv') {
     local $_ = $msg->{params}->[-1];
