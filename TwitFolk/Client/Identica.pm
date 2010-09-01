@@ -9,7 +9,7 @@ extends "TwitFolk::Client";
 with qw(TwitFolk::Client::Basic);
 
 has max_tweets => (isa => "Int", is => "ro");
-has sync_timer => (isa => "AnyEvent::Timer", is => "rw");
+has sync_timer => (is => "rw");
 
 sub BUILD {
   my($self) = @_;

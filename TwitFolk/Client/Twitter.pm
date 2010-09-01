@@ -17,7 +17,7 @@ has owner => (isa => "Str", is => "rw");
 has listener => (isa => "Maybe[AnyEvent::Twitter::Stream]", is => "rw");
 
 # Timer for reconnections
-has reconnect_timer => (isa => "Maybe[AnyEvent::Timer]", is => "rw");
+has reconnect_timer => (is => "rw");
 
 sub BUILD {
   my($self) = @_;
