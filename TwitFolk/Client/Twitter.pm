@@ -14,7 +14,7 @@ with qw(TwitFolk::Client::OAuth);
 has owner => (isa => "Str", is => "rw");
 
 # Our listener for tweets
-has listener => (isa => "AnyEvent::Twitter::Stream", is => "rw");
+has listener => (isa => "Maybe[AnyEvent::Twitter::Stream]", is => "rw");
 
 sub BUILD {
   my($self) = @_;
