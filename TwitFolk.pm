@@ -132,6 +132,8 @@ sub connect {
 sub on_join {
   my($self) = @_;
 
+  return if $self->_twitter || $self->_identica;
+
   my $last_tweets = TwitFolk::Last->new(
     tweet_id_file => $self->_config->{tweet_id_file}
   );

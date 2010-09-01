@@ -1,6 +1,6 @@
 # © 2010 David Leadbeater; https://dgl.cx/licence
 package TwitFolk::IRC;
-use EV;
+use EV; # AnyEvent::Impl::Perl seems to behave oddly
 use strict;
 
 =head1 NAME
@@ -29,15 +29,17 @@ sub connect {
       $self->send_srv(AWAY => $args->{away});
     }
 
-    for(qw(registered disconnect join irc_433 irc_notice)) {
-      my $callback = "on_$_";
-      $self->reg_cb($_ => sub {
-          my $irc = shift;
-          debug "IRC: $callback: " . (ref($_[0]) eq 'HASH' ? JSON::to_json($_[0]) : "");
-          $self->$callback(@_)
-        });
-    }
   })->();
+
+  # Register our callbacks
+  for(qw(registered disconnect join irc_433 irc_notice)) {
+    my $callback = "on_$_";
+    $self->reg_cb($_ => sub {
+      my $irc = shift;
+      debug "IRC: $callback: " . (ref($_[0]) eq 'HASH' ? JSON::to_json($_[0]) : "");
+      $self->$callback(@_)
+    });
+  }
 }
 
 sub msg {
