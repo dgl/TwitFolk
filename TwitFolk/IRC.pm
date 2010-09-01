@@ -32,7 +32,8 @@ sub connect {
     for(qw(registered disconnect join irc_433 irc_notice)) {
       my $callback = "on_$_";
       $self->reg_cb($_ => sub {
-          debug "IRC: $callback: " . (ref($_[1]) eq 'HASH' ? JSON::to_json($_[1]) : "");
+          my $irc = shift;
+          debug "IRC: $callback: " . (ref($_[0]) eq 'HASH' ? JSON::to_json($_[0]) : "");
           $self->$callback(@_)
         });
     }
@@ -79,7 +80,7 @@ sub on_irc_433 {
 }
 
 sub on_irc_notice {
-  my($self, $irc, $msg) = @_;
+  my($self, $msg) = @_;
 
   if(lc prefix_nick($msg) eq 'nickserv') {
     local $_ = $msg->{params}->[-1];
