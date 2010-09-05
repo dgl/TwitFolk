@@ -1,8 +1,15 @@
+- Fix friends list
+
+I broke adding/refreshing/some nick association stuff.
+
 - Ignore features
 
 Would be nice if people / hashtags could be (temporarily?) ignored in some
 fashion, for example when an otherwise-interesting person is tweeting about a
 conference that's not of interest.
+
+(Note twitter now extract these for us and provide some information, could make
+use of this).
 
 - Self service features
 
@@ -10,3 +17,23 @@ There should be some way for users in the channel to indicate that they want to
 be added or removed.
 
 Similarly, they should be able to indicate that their IRC nick has changed.
+
+(Now we can do OAuth they could maybe login to TwitFolk via OAuth -- could even
+go mad and allow them to reply as themselves.)
+
+- Improve use of Streaming API
+
+See http://dev.twitter.com/pages/streaming_api_concepts
+  - Implement back off
+  - Can get duplicates, need to handle
+  - Get back log of tweets
+
+- Fix Identica
+
+I broke identica while refactoring to support streaming API, fix it.
+
+- Make the tweet format configurable
+
+In some cases including things like the geo tag from a tweet might be of
+interest.
+
