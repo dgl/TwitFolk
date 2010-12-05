@@ -5,6 +5,7 @@ use AnyEvent::IRC::Util qw(prefix_nick);
 use AnyEvent::Twitter::Stream;
 use Try::Tiny;
 use TwitFolk::Log;
+use Module::Refresh;
 
 extends "TwitFolk::Client";
 
@@ -57,6 +58,9 @@ sub on_privmsg {
     } catch {
       $self->irc->msg($self->owner, "Sorry, that didn't seem to work: $_");
     }
+  } elsif(lc prefix_nick($msg) eq $self->owner
+      && $msg->{params}->[-1] =~ /^refresh/) {
+    Module::Refresh->refresh;
   }
 }
 
@@ -87,6 +91,7 @@ sub start_stream {
       token           => $self->access_token,
       token_secret    => $self->access_token_secret,
       method          => "userstream",
+      replies         => "all",
       on_tweet        => sub {
         my($tweet) = @_;
         debug "on_tweet: " . JSON::to_json($tweet);

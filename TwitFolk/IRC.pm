@@ -29,6 +29,14 @@ sub connect {
       $self->send_srv(AWAY => $args->{away});
     }
 
+    $EV::DIED = sub {
+      $self->notice("@" . ($channel =~ /^#/ ? $channel : "#$channel"), $@ =~ /(.*)/);
+    };
+
+    $SIG{__WARN__} = sub {
+      $self->notice("@" . ($channel =~ /^#/ ? $channel : "#$channel"), $_[0] =~ /(.*)/);
+    };
+
   })->();
 
   # Register our callbacks

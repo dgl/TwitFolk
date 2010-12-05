@@ -60,7 +60,11 @@ sub update
         my $svc;
 
         # Friend may be on identi.ca OR twitter
-        $svc = ($svcname =~ /dent/i) ? $self->identica->api : $self->twitter->api;
+        if($svcname =~ /dent/i) {
+          $svc = $self->identica && $self->identica->api;
+        } else {
+          $svc = $self->twitter->api;
+        }
 
         try {
           $u = $svc->show_user($f);
@@ -74,7 +78,7 @@ sub update
         debug("%s: Adding new friend '%s' (%lu)", $svcname,
           $f, $id);
 
-        try {
+        0 && try {
           $svc->create_friend($id); 
         } catch {
           debug("%s->create_friend(%lu) error: %s",

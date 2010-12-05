@@ -17,6 +17,17 @@ sub on_update {
   my $nick = $self->friends->lookup_nick($screen_name);
   my $text = decode_entities $update->{text};
 
+  if($update->{retweeted_status}->{text}) {
+    $text = "RT \@" . $update->{retweeted_status}->{user}->{screen_name} . ": "
+      . decode_entities $update->{retweeted_status}->{text};
+  }
+
+  # Skip tweets from people who aren't friends
+  unless(grep { lc($_) eq lc $screen_name } keys %{$self->friends->friends}) {
+    debug("Ignoring tweet %s from [%s]", $update->{id}, $screen_name);
+    return;
+  }
+
   # Skip tweets directed at others who aren't friends
   if ($text =~ /^@([[:alnum:]_]+)/) {
     my $other_sn = lc($1);
