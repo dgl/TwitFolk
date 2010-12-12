@@ -30,17 +30,23 @@ sub connect {
     }
 
     $EV::DIED = sub {
+      warn "Caught exception, will continue: $@";
       $self->notice("@" . ($channel =~ /^#/ ? $channel : "#$channel"), $@ =~ /(.*)/);
     };
 
     $SIG{__WARN__} = sub {
+      warn @_;
       $self->notice("@" . ($channel =~ /^#/ ? $channel : "#$channel"), $_[0] =~ /(.*)/);
     };
 
   })->();
 
+  $self->reg_cb(debug_cb => sub {
+      debug "@_";
+    });
+
   # Register our callbacks
-  for(qw(registered disconnect join irc_433 irc_notice)) {
+  for(qw(registered connect disconnect join irc_433 irc_notice)) {
     my $callback = "on_$_";
     $self->reg_cb($_ => sub {
       my $irc = shift;
@@ -64,6 +70,15 @@ sub on_registered {
   my($self) = @_;
 
   $self->enable_ping(90);
+}
+
+sub on_connect {
+  my($self, $error) = @_;
+
+  if($error) {
+    warn "Unable to connect: $error\n";
+    $self->on_disconnect;
+  }
 }
 
 sub on_disconnect {
