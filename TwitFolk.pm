@@ -88,6 +88,8 @@ sub BUILD {
 after start => sub {
   my($self) = @_;
 
+  return unless $self->is_daemon;
+
   $SIG{HUP} = sub {
     $self->_friends->update;
     $self->_twitter->sync if $self->_twitter;
