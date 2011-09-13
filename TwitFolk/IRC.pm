@@ -111,7 +111,7 @@ sub on_irc_notice {
     local $_ = $msg->{params}->[-1];
 
     if (/This nick is owned by someone else/ ||
-      /This nickname is registered and protected/i) {
+        /This nickname is registered/i) {
       debug("ID to NickServ at request of NickServ");
       $self->msg("NickServ", "IDENTIFY $self->{args}->{nick_pass}");
 
