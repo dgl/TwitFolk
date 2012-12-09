@@ -52,7 +52,7 @@ identica_pass = identipass
 friends_file = etc/twitfolk.friends
 
 # Where to store the most recent tweet id
-tweet_id_file = last_tweet
+tweet_id_file = etc/last_tweet
 
 # How many tweets to relay at a time
 max_tweets = 4

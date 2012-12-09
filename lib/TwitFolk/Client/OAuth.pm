@@ -22,7 +22,7 @@ use JSON qw(from_json to_json); # For serialisation
 
 requires "need_authorization";
 
-has state_file           => (isa => "Str", is => "ro", default => sub { "oauth.state" });
+has state_file           => (isa => "Str", is => "ro", default => sub { "etc/oauth.state" });
 has consumer_key         => (isa => "Str", is => "ro");
 has consumer_secret      => (isa => "Str", is => "ro");
 has access_token         => (isa => "Str", is => "rw");
