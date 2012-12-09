@@ -175,19 +175,4 @@ sub on_join {
   $self->_friends->update;
 }
 
-if(!caller) {
-  my $twitfolk = __PACKAGE__->new_with_options;
-
-  $SIG{HUP} = sub {
-    $twitfolk->handle_sighup;
-  };
-
-  $SIG{TERM} = $SIG{INT} = sub {
-    $twitfolk->shutdown;
-    exit 0;
-  };
-
-  $twitfolk->start;
-}
-
 1;
