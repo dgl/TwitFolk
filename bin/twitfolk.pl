@@ -40,4 +40,7 @@ $SIG{TERM} = $SIG{INT} = sub {
   exit 0;
 };
 
+STDOUT->autoflush(1);
+STDERR->autoflush(1);
+
 $twitfolk->start;
