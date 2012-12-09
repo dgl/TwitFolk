@@ -32,9 +32,10 @@ Pre-requisites
         - AnyEvent::IRC
         - Config::Tiny
         - Crpyt::SSLeay
+        - Daemon::Control
         - EV
 	- HTML::Entities
-        - MooseX::Daemonize
+        - MooseX::Getopt
 	- Net::Twitter
         - Try::Tiny
 
@@ -42,12 +43,14 @@ Pre-requisites
 
         wget -qO ~/bin/cpanm cpanmin.us 
         chmod 755 ~/bin/cpanm
-        cpanm --local-lib=./twitfolk-libs Net::Twitter AnyEvent::Twitter::Stream AnyEvent::IRC MooseX::Daemonize Config::Tiny Try::Tiny EV Crypt::SSLeay
+        cpanm --local-lib=./twitfolk-libs Net::Twitter AnyEvent::Twitter::Stream AnyEvent::IRC Daemon::Control MooseX::Getopt Config::Tiny Try::Tiny EV Crypt::SSLeay Module::Refresh
         [wait a rather long time]
 
         Then run with:
 
-        PERL5LIB=./twitfolk-libs/lib/perl5 ./twitfolk.pl
+        bin/twitfolk-init.pl start
+	
+	(See perldoc Daemon::Control for help on other ways to run it).
 
 - A twitter.com or identi.ca account
 

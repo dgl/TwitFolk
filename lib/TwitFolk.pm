@@ -20,6 +20,7 @@ our $VERSION = "0.2";
 
 use Config::Tiny;
 use Moose;
+use MooseX::Getopt;
 use Try::Tiny;
 
 use TwitFolk::Client::Identica;
@@ -28,12 +29,12 @@ use TwitFolk::Friends;
 use TwitFolk::IRC;
 use TwitFolk::Last;
 
-with qw(MooseX::Daemonize);
+with 'MooseX::Getopt';
 
 has config_file => (
   isa     => "Str",
   is      => "ro",
-  default => sub { "twitfolk.conf" }
+  default => sub { "etc/twitfolk.conf" }
 );
 
 has ircname => (
@@ -79,22 +80,11 @@ sub BUILD {
   $self->_friends(
     TwitFolk::Friends->new(friends_file => $self->_config->{friends_file})
   );
-
-  $self->pidfile($self->_config->{pidfile});
 }
 
-
 # The "main"
-after start => sub {
+sub start {
   my($self) = @_;
-
-  return unless $self->is_daemon;
-
-  $SIG{HUP} = sub {
-    $self->_friends->update;
-    $self->_twitter->sync if $self->_twitter;
-    $self->_identica->sync if $self->_identica;
-  };
 
   try {
     $self->connect;
@@ -106,11 +96,18 @@ after start => sub {
   };
 };
 
-before shutdown => sub {
+sub shutdown {
   my($self) = @_;
 
   $self->_irc->disconnect("Shutdown");
-};
+}
+
+sub handle_sighup {
+  my($self) = @_;
+  $self->_friends->update;
+  $self->_twitter->sync if $self->_twitter;
+  $self->_identica->sync if $self->_identica;
+}
 
 sub connect {
   my($self) = @_;
@@ -176,6 +173,21 @@ sub on_join {
   }
 
   $self->_friends->update;
+}
+
+if(!caller) {
+  my $twitfolk = __PACKAGE__->new_with_options;
+
+  $SIG{HUP} = sub {
+    $twitfolk->handle_sighup;
+  };
+
+  $SIG{TERM} = $SIG{INT} = sub {
+    $twitfolk->shutdown;
+    exit 0;
+  };
+
+  $twitfolk->start;
 }
 
 1;

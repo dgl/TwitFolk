@@ -19,9 +19,6 @@ nick_pass = yournickpass
 # If there is no identd installed then use this ident.
 username = twitfolk
 
-# File to write PID to whilst running.
-pidfile = twitfolk.pid
-
 # Away message to immediately set.
 away = If you have a Twitter or Identi.ca account, ask grifferz to add you to me!
 
@@ -52,7 +49,7 @@ identica_user = identiuser
 identica_pass = identipass
 
 # File containing list of people to follow and their IRC nicknames
-friends_file = twitfolk.friends
+friends_file = etc/twitfolk.friends
 
 # Where to store the most recent tweet id
 tweet_id_file = last_tweet
