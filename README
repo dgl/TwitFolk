@@ -34,23 +34,24 @@ Pre-requisites
         - Crpyt::SSLeay
         - Daemon::Control
         - EV
-	- HTML::Entities
+        - HTML::Entities
+        - Mail::SpamAssassin::Util::RegistrarBoundaries
         - MooseX::Getopt
-	- Net::Twitter
+        - Net::Twitter
         - Try::Tiny
 
     It might be easiest to use cpanm with a local::lib to use these modules:
 
         wget -qO ~/bin/cpanm cpanmin.us 
         chmod 755 ~/bin/cpanm
-        cpanm --local-lib=./twitfolk-libs Net::Twitter AnyEvent::Twitter::Stream AnyEvent::IRC Daemon::Control MooseX::Getopt Config::Tiny Try::Tiny EV Crypt::SSLeay Module::Refresh
+        cpanm --local-lib=./twitfolk-libs Net::Twitter AnyEvent::Twitter::Stream AnyEvent::IRC Daemon::Control MooseX::Getopt Config::Tiny Try::Tiny EV Crypt::SSLeay Module::Refresh NetAddr::IP Mail::SpamAssassin::Util::RegistrarBoundaries
         [wait a rather long time]
 
         Then run with:
 
         bin/twitfolk-init.pl start
-	
-	(See perldoc Daemon::Control for help on other ways to run it).
+
+        (See perldoc Daemon::Control for help on other ways to run it).
 
 - A twitter.com or identi.ca account
 
