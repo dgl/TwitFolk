@@ -50,12 +50,17 @@ sub on_update {
 
   if ($update->{entities}->{urls}) {
     for my $url(@{$update->{entities}->{urls}}) {
-      my $uri = URI->new($url->{expanded_url});
+      my $full_uri = $url->{expanded_url};
+      my $uri = URI->new($full_uri);
       next unless $uri;
       my(undef, $domain) = Mail::SpamAssassin::Util::RegistrarBoundaries::split_domain($uri->host);
       # Use replacement rather than the given offset, makes doing the
       # replacement easier.
-      $text =~ s/(\Q$url->{url}\E)/"$1 [" . $domain . "]"/e;
+      if((5 + length $url->{url}) >= length $full_uri) {
+        $text =~ s/\Q$url->{url}\E/$full_uri/;
+      } else {
+        $text =~ s/(\Q$url->{url}\E)/"$1 [" . $domain . "]"/e;
+      }
     }
   }
 
